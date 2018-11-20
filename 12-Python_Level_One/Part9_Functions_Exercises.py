@@ -72,22 +72,15 @@ def stringBits(str):
 
 
 def end_other(a, b):
-    if len(a) < len(b):
-        shorter = a.lower()
-        longer = b.lower()
-    else:
-        shorter = b.lower()
-        longer = a.lower()
+    a = a.lower()
+    b = b.lower()
 
-    num = len(longer) - len(shorter)
-    substring = longer[num:]
+    # if a the last b length letters of a are equal to b
+    # or
+    #if the last a length letters of a are equal to b
+    return a[-(len(b)):] == b or a == [-len(a):]
 
-    if substring == shorter:
-        print (True)
-        return True
-    else:
-        print(False)
-        return False
+    # return (b.endswith(a) or a.endswith(b))
 
   # CODE GOES HERE
 #end_other('AbC', 'HiaBc')
@@ -136,9 +129,12 @@ def doubleChar(str):
 # no_teen_sum(2, 1, 14) → 3
 
 def fix_teen(n):
-    for i in range(13,20):
-        if n == i and n != 15 and n != 16 :
-            return 0
+    # for i in range(13,20):
+    #     if n == i and n != 15 and n != 16 :
+    #         return 0
+    # return n
+    if n [13,14,17,18,19]:
+        return 0
     return n
 
 
@@ -165,7 +161,8 @@ def count_evens(nums):
     even = 0
     for item in nums:
         if item%2 == 0:
-            even = even + 1
+            even += 1
     print(even)
+    return even
   # CODE GOES HERE
 count_evens([1, 3, 5])
