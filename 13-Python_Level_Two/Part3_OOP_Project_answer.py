@@ -41,27 +41,22 @@ class Deck:
     have a method for splitting/cutting the deck in half and Shuffling the deck.
     """
     def __init__(self):
-        self.cards = []
-        for suit in SUITE:
-            for rank in RANKS:
-                if rank == "A":
-                    rank = "14"
-                if rank == "K":
-                    rank = "13"
-                if rank == "Q":
-                    rank = "12"
-                if rank == "J":
-                    rank = "11"
+        #use a tuple for each card
+        # self.cards = []
+        # for r in RANKS:
+        #     for s in SUITE:
+        #         cards.append((s,r))
+        # or use list comprehension , the above is equal to this
+        self.cards = [(s,r) for s in SUITE for r in RANKS]
 
-                self.cards.append(suit+rank)
 
-    def split(self):
-        self.shuffle()
-        return [ self.cards[0:26],self.cards[26:] ]
+    def split_in_half(self):
+        #returns a tuple of the split cards
+        return (self.cards[0:26],self.cards[26:])
 
     def shuffle(self):
         shuffle(self.cards)
-        return self.cards
+
 
 class Hand:
     '''
@@ -71,8 +66,11 @@ class Hand:
     def __init__(self,cards):
         self.cards = cards
 
-    def add_card(self,card):
-        self.cards.append(card)
+    def __str__(self):#returns the number of cards in a players hand
+        return "Contains {} cards".format(len(self.cards))
+
+    def add(self,card):
+        self.cards.extend(card)
 
     def remove_card(self):
         return self.cards.pop()
@@ -86,73 +84,87 @@ class Player:
         self.name = name
         self.hand = hand
 
+    def play_card(self):
+        drawn_card = self.hand.remove_card()
+        print("{} has placed: {}".format(self.name,drawn_card))
+        print("\n")
+        return drawn_card
 
+    def remove_war_cards(self):
+        war_cards = []
+        if len(self.hand.cards) < 3:
+            return self.hand.cards
+        else:
+            for x in range(3):
+                war_cards.append(self.hand.remove_card())
+            return war_cards
 
+    def still_has_cards(self):
+        """
+        Return true if player still has cards left
+        """
+        return len(self.hand.cards) != 0
 ######################
 #### GAME PLAY #######
 ######################
 
-deck = Deck()
-hands = deck.split()
-hand_one = Hand(hands[0])
-hand_two = Hand(hands[1])
-player = Player("Sean",hand_one)
-computer = Player("Computer",hand_two)
+
+
 print("Welcome to War, let's begin...")
+d = Deck()
+d.shuffle()
+#below assigns each variable to one of the tuples that is returned
+#tuple unpacking
+half1,half2 = d.split_in_half()
 
-def test_cards(computer_card,player_card):
-    if (computer_card[1:] < player_card[1:]):
-        return "computer"
-    else:
-        return "player"
+comp = Player("computer",Hand(half1)) #creates a computer player with a Hand object created with the first half of the cards
 
-def add_cards(person,cards):
-    if person == "computer":
-        for card in cards:
-            computer.hand.add_card(card)
-    else:
-        for card in cards:
-            player.hand.add_card(card)
+name = input ("what is your name?")
+user = Player(name,Hand(half2))
 
+total_rounds = 0
+war_count = 0
 
+while user.still_has_cards() and user.still_has_cards():
+    total_rounds += 1
+    print("time for a new round")
+    print("here are the current standings")
+    print(user.name + "has the count: " + str(len(user.hand.cards)))
+    print(comp.name + "has the count: " + str(len(comp.hand.cards)))
+    print("play a card")
+    print("\n")
 
-while len(player.hand.cards) > 0 and len(computer.hand.cards) > 0:
-    computer_card = computer.hand.remove_card()
-    player_card = player.hand.remove_card()
-    cards = [computer_card,player_card]
-    print("Your Card is {x}".format(x=player_card))
-    print("Computer's Card is {x}".format(x=computer_card))
+    table_cards = []
+    c_card = comp.play_card()
+    p_card = user.play_card()
 
+    table_cards.append(c_card)
+    table_cards.append(p_card)
 
-    if (computer_card[1:] == player_card[1:]):
-        if(len(player.hand.cards)<3  or len(computer.hand.cards)<3):
-            break
-        print("WAR!!!")
-        cards = []
-        for i in range(4):
-            cards.append(computer.hand.remove_card())
-            cards.append(player.hand.remove_card())
+    if c_card[1] == p_card[1]:
+        war_count += 1
+        print ("War!")
+        #Below draws the four cards necessary for war and adds them to the table_cards list
+        table_cards.extend(user.remove_war_cards())
+        table_cards.extend(comp.remove_war_cards())
 
-        computer_up = cards[0]
-        player_up = cards[1]
-
-        if (test_cards(computer_up,player_up) == "player"):
-            add_cards("player",cards)
+        #it takes the index value of RANKS, for instance RANKS.index(5) = 3, it is the index value fo the number 5 in the RANKS LIST
+        #where is the index of each card in the RANKS list
+        #RANKS is indexed so that the lowest card is 0 and the highest card is 12 (A)
+        #RANKS = '2 3 4 5 6 7 8 9 10 J Q K A'.split()
+        if RANKS.index(c_card[1]) < RANKS.index(p_card[1]):
+            user.hand.add(table_cards)
         else:
-            add_cards("computer",cards)
-
+            comp.hand.add(table_cards)
+    #if there is no war, just compare the cards
     else:
-        if (test_cards(computer_card,player_card) == "computer"):
-             #print("Computer Won")
-             add_cards("computer",cards)
+        if RANKS.index(c_card[1]) < RANKS.index(p_card[1]):
+            user.hand.add(table_cards)
         else:
-            #print("Player Won")
-            add_cards("player",cards)
+            comp.hand.add(table_cards)
 
-if len(player.hand.cards) > len(computer.hand.cards):
-    print ("You Won")
-else:
-    print ("The Computer Won")
+#end while Loop
 
-
+print("game over, number of rounds: " + str(total_rounds))
+print("a war happend " + str(war_count)+ " times")
 # Use the 3 classes along with some logic to play a game of war!
