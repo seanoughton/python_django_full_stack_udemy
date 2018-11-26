@@ -25,6 +25,7 @@
 # Let's do a quick example of using the search method in the re module to find
 # some text:
 
+#imports the regex module  
 import re
 
 # List of patterns to search for
