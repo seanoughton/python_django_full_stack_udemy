@@ -30,5 +30,5 @@
 # This is posisble but frowned upon, often causes poorly readable code because
 # you don't know what functions come from mymodule
 
-# from mymodule import *
-# func_in_mymodule()
+from mymodule import *
+func_in_mymodule()
