@@ -1,0 +1,38 @@
+ <!DOCTYPE html>
+ <html lang="en">
+
+<head>
+     <meta charset="UTF-8">
+     <title>TITLE</title>
+     <meta name="description" content="DESCRIPTION">
+    <link rel="stylesheet" href="PATH">
+
+
+ </head>
+
+ <body>
+
+   <figure id="videoContainer">
+    <video id="video" controls preload="metadata" poster="img/poster.jpg">
+       <!-- <source src="../video-player/AutoCAD_Behind-the-Scenes.mp4" type="video/mp4"> -->
+      <source src="https://seanoughton.com/AutoCAD_Behind_the_Scenes_640_360.mp4"></source>
+    </video>
+    <ul id="video-controls" class="controls">
+       <li><button id="playpause" type="button">Play/Pause</button></li>
+       <li><button id="stop" type="button">Stop</button></li>
+       <li class="progress">
+          <progress id="progress" value="0" min="0">
+             <span id="progress-bar"></span>
+          </progress>
+       </li>
+       <li><button id="mute" type="button">Mute/Unmute</button></li>
+       <li><button id="volinc" type="button">Vol+</button></li>
+       <li><button id="voldec" type="button">Vol-</button></li>
+       <li><button id="fs" type="button">Fullscreen</button></li>
+    </ul>
+    <figcaption></figcaption>
+   </figure>
+    <script type="text/javascript" src="script.js "></script>
+ </body>
+
+ </html>

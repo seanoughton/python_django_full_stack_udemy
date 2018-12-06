@@ -1,0 +1,52 @@
+body {
+  font-family: 'Permanent Marker', cursive;
+  text-align: center;
+}
+
+h1 {
+  text-align: center;
+}
+
+table {
+  /* border: solid black 2px; */
+  width: 1000px;
+  margin: auto;
+  border-spacing: 10px;
+}
+
+td {
+  border-radius: 25px;
+  height: 400px;
+}
+
+
+#one {
+  background-color: #FCF6B1;
+}
+
+#two {
+  background-color: #E3170A;
+}
+
+#three {
+  background-color: #A9E5BB;
+}
+
+#four {
+  background-color: #F7B32B;
+}
+
+#five {
+  background-color: #2D1E2F;
+}
+
+#square{
+  width: 50px;
+  height: 50px;
+  margin: auto;
+  background-color: #FF3864;
+}
+
+button {
+  width: 50px;
+}
