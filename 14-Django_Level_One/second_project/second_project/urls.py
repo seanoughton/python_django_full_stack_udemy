@@ -24,5 +24,5 @@ urlpatterns = [
     url(r'^$',views.index,name='index'),
     url(r'^second/',include('second_app.urls')),
     path('admin/', admin.site.urls),
-    path('/users',views.users)
+    # path('/users',views.users)
 ]
