@@ -22,7 +22,7 @@ from sean_first_app import views
 urlpatterns = [
     # path('',views.index),
     url(r'^$',views.index,name='index'),
-    url(r'^help/',include('sean_first_app.urls')),
-    # url(r'^sean_first_app/',include('sean_first_app.urls')),
+    # url(r'^help/',include('sean_first_app.urls')),
+    url(r'^sean_first_app/',include('sean_first_app.urls')),
     path('admin/', admin.site.urls),
 ]

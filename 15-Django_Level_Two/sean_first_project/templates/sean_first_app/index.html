@@ -4,7 +4,7 @@
 
 <head>
      <meta charset="UTF-8">
-     <title>Picture Page</title>
+     <title>Django Level Two</title>
      <meta name="description" content="DESCRIPTION">
     <link rel="stylesheet" href="{% static "css/mystyle.css" %}">
 
@@ -14,8 +14,28 @@
  </head>
 
  <body>
-      <h1>Hello this is the profile image </h1>
-      <img src="{% static "images/default_profile.png" %}" alt="profile image">
+     <h1>Welcome to Django Level Two</h1>
+     <h2>Here are you access records</h2>
+     <div class="djangtwo">
+       {% if access_records %}
+         <table>
+           <thead>
+             <th>Site Name</th>
+             <th>Date Accessed</th>
+           </thead>
+           {% for acc in access_records%}
+           <tr>
+             <td> {{ acc.name}} </td>
+             <td> {{ acc.date}} </td>
+           </tr>
+           {% endfor %}
+         </table>
+
+       {% else %}
+         <p> No Access Records Found</p>
+       {% endif %}
+     </div>
+
  </body>
 
  </html>
