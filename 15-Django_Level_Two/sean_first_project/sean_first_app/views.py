@@ -5,6 +5,7 @@ from sean_first_app.models import Topic,Webpage,AccessRecord
 
 def index(request):
     #objects must be a query to the database through the orm
+    #this is some more description of what is happening
     webpages_list = AccessRecord.objects.order_by('date')
     date_dict = {'access_records':webpages_list}
     return render(request,'sean_first_app/index.html',context=date_dict)
