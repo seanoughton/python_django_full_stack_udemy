@@ -25,6 +25,9 @@ class SchoolCreateView(CreateView):
 
 
 
+class SchoolUpdateView(UpdateView):
+    fields = ('name','principal')
+    model = models.School
 
 
 
