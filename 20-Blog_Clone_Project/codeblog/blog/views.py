@@ -1,13 +1,15 @@
-from django.shortcuts import render,get_object_or_404,redirect
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from blog.models import Post, Comment
+from django.utils import timezone
+from blog.forms import PostForm, CommentForm
+
 from django.views.generic import (TemplateView,ListView,
                                   DetailView,CreateView,
                                   UpdateView,DeleteView)
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.decorators import login_required
-from blog.models import Post, Comment
-from blog.forms import PostForm,CommentForm
-from django.utils import timezone
+
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 # Create your views here.
@@ -88,3 +90,6 @@ def comment_remove(request,pk):
     post_pk = comment.post.pk
     comment.delete()
     return redirect('post_detail',pk=post_pk)
+
+def login(request):
+    return render('blog/about.html')
