@@ -25,7 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('blog.urls')),
     # path('accounts/login', views.login,name='login'),
-    path('accounts/login', views.login,name='login'),
+    # path('accounts/login/', views.login,name='login'),
     #when you log out, the next page you go to is the "/"
     # path('accounts/logout', views.logout,name='logout',kwargs={'next_page':'/'}),
 ]
