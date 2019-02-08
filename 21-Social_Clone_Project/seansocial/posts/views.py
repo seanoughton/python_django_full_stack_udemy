@@ -7,6 +7,8 @@ from django.views import generic
 # pip install django-braces
 from braces.views import SelectRelatedMixin
 
+from posts.models import Post
+
 from . import forms
 from . import models
 
@@ -52,8 +54,10 @@ class PostDetail(SelectRelatedMixin, generic.DetailView):
 
 class CreatePost(LoginRequiredMixin, SelectRelatedMixin, generic.CreateView):
     # form_class = forms.PostForm
+    print('inside create post')
     fields = ('message','group')
-    model = models.Post
+    # model = models.Post
+    model = Post
 
     # def get_form_kwargs(self):
     #     kwargs = super().get_form_kwargs()
